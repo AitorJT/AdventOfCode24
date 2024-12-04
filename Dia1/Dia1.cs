@@ -1,4 +1,7 @@
-﻿string rutaInput = "F:/Codigo/CodigoDeAdvientoPorquePolvoronesNoMeHacenFalta/Dia1/Dia1/input.txt";
+﻿using AdventOfCode24.Helpers;
+//string rutaInput = "F:/Codigo/repos/AitorJT/AdventOfCode24/Dia1/input.txt";
+string rutaInput = Helper.GetInputFilePath(1);
+//Console.WriteLine(ruta2);
 //una lista para cada columna
 List<int> listaIzq = new List<int>();
 List<int> listaDer = new List<int>();

@@ -1,6 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using AdventOfCode24.Helpers;
+string rutaInput = Helper.GetInputFilePath(2);
 
-string rutaInput = "F:/Codigo/CodigoDeAdvientoPorquePolvoronesNoMeHacenFalta/Dia2/Dia2/input.txt";
 int validReports = 0;
 var sr = new StreamReader(rutaInput);
 string input = sr.ReadToEnd();
