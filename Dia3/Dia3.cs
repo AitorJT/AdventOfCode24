@@ -2,9 +2,6 @@
 using AdventOfCode24.Helpers;
 using System.Text.RegularExpressions;
 
-
-
-
 var inputPath = Helper.GetInputFilePath(3);
 string input = File.ReadAllText(inputPath);
 string regex1 = @"mul\((?<primerNumero>[0-9]{1,3}),(?<segundoNumero>[0-9]{1,3})\)";
@@ -26,7 +23,6 @@ foreach (Match resultado in resultados)
         {
             sumaTotal += int.Parse(resultado.Groups["primerNumero"].Value) * int.Parse(resultado.Groups["segundoNumero"].Value);
         }
-        
     }
     else
     {
@@ -35,12 +31,8 @@ foreach (Match resultado in resultados)
             hacer = true;
             continue;
         }
-    }
-    
-
-    
+    }    
 }
-
 static bool EsMul(Match resultado)
 {
     if (resultado.Groups["mul"].Success)
