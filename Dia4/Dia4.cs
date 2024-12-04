@@ -1,4 +1,5 @@
 ﻿using AdventOfCode24.Helpers;
+using System.Reflection.Metadata.Ecma335;
 
 var inputPath = Helper.GetInputFilePath(4);
 string[] input = File.ReadAllLines(inputPath);
@@ -13,20 +14,25 @@ for (int i = 0; i < filas; i++)
         grid[i, j] = input[i][j];
     }
 }
+Console.WriteLine($"Tamaño total del grid: filas {filas} y columnas {columnas}");
 
 int ocurrencias = BuscarPalabra("XMAS", grid);
+//Solucion
 Console.WriteLine($"Numero de veces que se ha encontrado la palabra: {ocurrencias}");
+
+
 static int BuscarPalabra(string palabra, char[,] matriz)
 {
     var filas = matriz.GetLength(0);
     var columnas = matriz.GetLength(1);
-
+    Console.WriteLine($"filas y columnas recibidas en buscarPalabra: filas {filas} y columnas {columnas}");
     var ocurrencias = 0;
 
     for (int i = 0; i < filas; i++)
     {
         for (int j = 0; j < columnas; j++)
         {
+            Console.WriteLine($"Buscando en fila, columna [{i}],[{j}]");
             if(BuscarPalabraAqui(palabra,matriz, i, j))
             {
                 ocurrencias++;
@@ -59,20 +65,19 @@ static bool BuscarPalabraAqui(string palabra, char[,] matriz, int fila, int colu
         int posicionX = fila + x[direccion];
         int posicionY = columna + y[direccion];
         //en 
-        for(posicionLetra = 1;  posicionLetra < longitudPalabra; posicionLetra++)
+        Console.WriteLine($"Comprobando palabra por la letra {palabra[posicionLetra]} en fila,columna ({fila}, {columna}) en dirección {direccion}.");
+        for (posicionLetra = 1;  posicionLetra < longitudPalabra; posicionLetra++)
         {
             //posiciones limite
-            if(posicionX >= filas || posicionX < 0)
-            {
-                break;
-            }
-            if(posicionY >= columnas || posicionY < 0)
+            if (posicionX < 0 || posicionX >= filas || posicionY < 0 || posicionY >= columnas)
             {
                 break;
             }
 
             if (matriz[posicionX,posicionY] == palabra[posicionLetra])
             {
+                Console.WriteLine($"Comprobando palabra por la letra {palabra[posicionLetra]} en fila,columna ({fila}, {columna}) en dirección {direccion}.");
+
                 posicionX += x[direccion];
                 posicionY += y[direccion];
             }
@@ -84,6 +89,7 @@ static bool BuscarPalabraAqui(string palabra, char[,] matriz, int fila, int colu
         //Si ha llegado al final es que ha encontrado todas las letras
         if(posicionLetra == longitudPalabra)
         {
+            Console.WriteLine($"Encontrada palabra {palabra} en posición ({fila},{columna}) en dirección {direccion}");
             return true;
         }
 
