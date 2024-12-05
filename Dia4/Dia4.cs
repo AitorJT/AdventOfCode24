@@ -7,6 +7,7 @@ var filas = input.Length;
 var columnas = input[0].Length;
 char[,] grid = new char[filas, columnas];
 
+//poblar el grid
 for (int i = 0; i < filas; i++)
 {
     for (int j = 0; j < columnas; j++)
@@ -23,16 +24,18 @@ Console.WriteLine($"Numero de veces que se ha encontrado la palabra: {ocurrencia
 
 static int BuscarPalabra(string palabra, char[,] matriz)
 {
+    //en C# para un array tipo [,] el 0 da filas y 1 columnas
     var filas = matriz.GetLength(0);
     var columnas = matriz.GetLength(1);
     Console.WriteLine($"filas y columnas recibidas en buscarPalabra: filas {filas} y columnas {columnas}");
     var ocurrencias = 0;
-
+    //Se busca la primera letra de la palabra por todas las posiciones del array
     for (int i = 0; i < filas; i++)
     {
         for (int j = 0; j < columnas; j++)
         {
             Console.WriteLine($"Buscando en fila, columna [{i}],[{j}]");
+            //Si el resultado de buscar la palabra en esa posicion es true, subimos contador de ocurrencias
             if(BuscarPalabraAqui(palabra,matriz, i, j))
             {
                 ocurrencias++;
@@ -58,14 +61,16 @@ static bool BuscarPalabraAqui(string palabra, char[,] matriz, int fila, int colu
         return false;
     }
     
-    //se buscan las siguientes letras en cada direccion, si se falla se prueba con el siguiente vector
+    //se buscan las siguientes letras en cada posible direccion, si se falla se prueba con el siguiente vector
+    //asi no hay quepreocuparse de buscar palabras inversas
     for(int direccion = 0; direccion < 8; direccion++)
     {
         int posicionLetra = 1;
         int posicionX = fila + x[direccion];
         int posicionY = columna + y[direccion];
-        //en 
+        
         Console.WriteLine($"Comprobando palabra por la letra {palabra[posicionLetra]} en fila,columna ({fila}, {columna}) en dirección {direccion}.");
+        //se prueban las 8 posibles direcciones desde la segunda letra porque la primera ya la hemos encontrado
         for (posicionLetra = 1;  posicionLetra < longitudPalabra; posicionLetra++)
         {
             //posiciones limite
@@ -73,7 +78,7 @@ static bool BuscarPalabraAqui(string palabra, char[,] matriz, int fila, int colu
             {
                 break;
             }
-
+            //si la siguiente letra coincide, sumamos uno mas a la direccion para evaluar la siguiente posicion que deberia tener la siguiente letra
             if (matriz[posicionX,posicionY] == palabra[posicionLetra])
             {
                 Console.WriteLine($"Comprobando palabra por la letra {palabra[posicionLetra]} en fila,columna ({fila}, {columna}) en dirección {direccion}.");
@@ -83,10 +88,11 @@ static bool BuscarPalabraAqui(string palabra, char[,] matriz, int fila, int colu
             }
             else
             {
+                //si no coincide la letra, esta direccion ya no va a ser válida y probamos la siguiente
                 break;
             }
         }
-        //Si ha llegado al final es que ha encontrado todas las letras
+        //Si ha llegado al final es que ha encontrado todas las letras en orden
         if(posicionLetra == longitudPalabra)
         {
             Console.WriteLine($"Encontrada palabra {palabra} en posición ({fila},{columna}) en dirección {direccion}");
